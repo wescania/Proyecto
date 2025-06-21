@@ -1,0 +1,11 @@
+flask
+flask_sqlalchemy
+flask_login
+flask_cors
+flask_restful
+flask_praetorian
+requests
+werkzeug
+nvdlib
+beautifulsoup4
+pyjwt

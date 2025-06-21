@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block title %}Panel de administrador{% endblock %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Bienvenido, Administrador</h2>
+
+    <h4 class="mt-4">Todos los usuarios</h4>
+    <ul class="list-group mb-4">
+        {% for u in usuarios %}
+            <li class="list-group-item">
+                {{ u.nombre }} {{ u.apellidos }} — {{ u.email }}
+            </li>
+        {% endfor %}
+    </ul>
+
+    <h4>Todos los proyectos</h4>
+    <ul class="list-group">
+        {% for p in proyectos %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                {{ p.name }} — {{ p.description[:40] }}...
+                <a href="{{ url_for('chat_id', id_proyecto=p.id) }}" class="btn btn-sm btn-outline-primary">Ir al chat</a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

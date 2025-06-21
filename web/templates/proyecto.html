@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+{% block title %}Proyecto: {{ proyecto.name }}{% endblock %}
+{% block content %}
+<div class="container mt-4">
+    <h1>{{ proyecto.name }}</h1>
+    <p><strong>Descripción:</strong> {{ proyecto.description }}</p>
+    <p><strong>Fecha:</strong> {{ proyecto.fecha }}</p>
+    <p><strong>Última modificación:</strong> {{ proyecto.fecha_modificacion }}</p>
+    <p><strong>Máx. vulnerabilidades críticas permitidas:</strong> {{ proyecto.max_criticas }}</p>
+    <p><strong>Máx. vulnerabilidades medias permitidas:</strong> {{ proyecto.max_medias }}</p>
+    <p><strong>Umbral CVSS para crítica:</strong> {{ proyecto.score_critico }}</p>
+    <p><strong>Umbral CVSS para media:</strong> {{ proyecto.score_medio }}</p>
+    <div class="mt-4">
+        <a href="{{ url_for('proyecto_editar', id=proyecto.id) }}" class="btn btn-warning">Editar</a>
+        <form action="{{ url_for('proyecto_borrar', id=proyecto.id) }}" method="POST" style="display:inline;">
+            <button type="submit" class="btn btn-danger" onclick="return confirm('¿Eliminar este proyecto?');">Eliminar</button>
+        </form>
+        <a href="{{ url_for('chat_id', id_proyecto=proyecto.id) }}" class="btn btn-secondary">Chat</a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends 'layout.html' %}
+{% block title %}{{ accion }} Proyecto{% endblock %}
+{% block content %}
+<div class="container mt-4">
+    <h1>{{ accion }} Proyecto</h1>
+    <form method="POST">
+        <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre</label>
+            <input type="text" class="form-control" name="nombre" id="nombre" required value="{{ proyecto.name if proyecto else '' }}">
+        </div>
+        <div class="mb-3">
+            <label for="descripcion" class="form-label">Descripción</label>
+            <textarea class="form-control" name="descripcion" id="descripcion" rows="3" required>{{ proyecto.description if proyecto else '' }}</textarea>
+        </div>
+        <div class="mb-3">
+            <label for="fecha" class="form-label">Fecha</label>
+            <input type="date" class="form-control" name="fecha" id="fecha" required value="{{ proyecto.fecha if proyecto else '' }}">
+        </div>
+        <div class="mb-3">
+            <label for="max_criticas" class="form-label">Máx. vulnerabilidades críticas permitidas</label>
+            <input type="number" class="form-control" name="max_criticas" id="max_criticas" min="0" value="{{ proyecto.max_criticas if proyecto else 3 }}">
+        </div>
+        <div class="mb-3">
+            <label for="max_medias" class="form-label">Máx. vulnerabilidades medias permitidas</label>
+            <input type="number" class="form-control" name="max_medias" id="max_medias" min="0" value="{{ proyecto.max_medias if proyecto else 5 }}">
+        </div>
+        <div class="mb-3">
+            <label for="score_critico" class="form-label">Umbral CVSS para crítica</label>
+            <input type="number" step="0.1" class="form-control" name="score_critico" id="score_critico" min="0" max="10" value="{{ proyecto.score_critico if proyecto else 9.0 }}">
+        </div>
+        <div class="mb-3">
+            <label for="score_medio" class="form-label">Umbral CVSS para media</label>
+            <input type="number" step="0.1" class="form-control" name="score_medio" id="score_medio" min="0" max="10" value="{{ proyecto.score_medio if proyecto else 5.0 }}">
+        </div>
+        <div class="mb-3">
+            <label for="umbral_solucionabilidad" class="form-label">% mínimo de vulnerabilidades solucionables</label>
+            <input type="number" step="0.1" class="form-control" name="umbral_solucionabilidad" id="umbral_solucionabilidad" min="0" max="100" value="{{ proyecto.umbral_solucionabilidad if proyecto else 80.0 }}">
+        </div>
+        <div class="mb-3">
+            <label for="max_total_vulnerabilidades" class="form-label">Máximo total de vulnerabilidades permitidas</label>
+            <input type="number" class="form-control" name="max_total_vulnerabilidades" id="max_total_vulnerabilidades" min="0" value="{{ proyecto.max_total_vulnerabilidades if proyecto else 10 }}">
+        </div>
+        <div class="mb-3">
+            <label for="nivel_maximo_cvss" class="form-label">CVSS máximo permitido</label>
+            <input type="number" step="0.1" class="form-control" name="nivel_maximo_cvss" id="nivel_maximo_cvss" min="0" max="10" value="{{ proyecto.nivel_maximo_cvss if proyecto else 9.0 }}">
+        </div>
+        <button type="submit" class="btn btn-primary">{{ accion }}</button>
+        <a href="{{ url_for('proyectos') }}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+{% endblock %}

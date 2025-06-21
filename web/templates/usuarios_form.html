@@ -1,0 +1,31 @@
+{% extends 'layout.html' %}
+{% block title %}{{ accion }} Usuario{% endblock %}
+{% block content %}
+<div class="container mt-4">
+    <h1>{{ accion }} Usuario</h1>
+    <form method="POST">
+        <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre</label>
+            <input type="text" class="form-control" name="nombre" id="nombre" required
+                   value="{{ usuario.nombre if usuario else '' }}">
+        </div>
+        <div class="mb-3">
+            <label for="apellidos" class="form-label">Apellidos</label>
+            <input type="text" class="form-control" name="apellidos" id="apellidos" required
+                   value="{{ usuario.apellidos if usuario else '' }}">
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Correo electrónico</label>
+            <input type="email" class="form-control" name="email" id="email" required
+                   value="{{ usuario.email if usuario else '' }}">
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Contraseña</label>
+            <input type="password" class="form-control" name="password" id="password" required
+                   value="{{ usuario.password if usuario else '' }}">
+        </div>
+        <button type="submit" class="btn btn-primary">{{ accion }}</button>
+        <a href="{{ url_for('index') }}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+{% endblock %}

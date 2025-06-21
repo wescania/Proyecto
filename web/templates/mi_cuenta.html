@@ -1,0 +1,57 @@
+{% extends 'layout.html' %}
+{% block title %}Mi cuenta{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>¡Bienvenido, {{ current_user.nombre }}!</h2>
+
+    <div class="mt-4">
+        <a href="{{ url_for('index') }}" class="btn btn-secondary">Volver al inicio</a>
+        <a href="{{ url_for('usuario_editar', id=current_user.id) }}" class="btn btn-warning">Editar perfil</a>
+        <form action="{{ url_for('usuario_borrar', id=current_user.id) }}" method="POST" style="display:inline;">
+            <button type="submit" class="btn btn-danger" onclick="return confirm('¿Seguro que quieres eliminar tu cuenta?')">Eliminar cuenta</button>
+        </form>
+        <a href="{{ url_for('logout') }}" class="btn btn-outline-dark ms-2">Cerrar sesión</a>
+    </div>
+
+    <div class = "mb-4 mt-2">
+        {% if es_admin %}
+        <a href="{{ url_for('usuarios') }}" class="btn btn-secondary">Gestionar usuarios</a>
+        <a href="{{ url_for('proyectos') }}" class="btn btn-secondary">Ver todos los proyectos</a>
+        {% endif %}
+    </div>   
+
+    <hr>
+    <h2 class="mt-4 mb-4">Tus proyectos</h2>
+    <div class="mb-4">
+        <a href="{{ url_for('proyecto_nuevo') }}" class="btn btn-primary">Crear proyecto</a>
+    </div>    
+    
+    <div id="proyectos" class="row row-cols-1 row-cols-md-2 g-3">
+      {% for proyecto in proyectos %}
+        <div class="col">
+          <div class="card h-100">
+            <div class="card-body">
+              <h5 class="card-title">{{ proyecto.name }}</h5>
+              <p class="card-text">{{ proyecto.description[:100] }}{% if proyecto.description|length > 100 %}...{% endif %}</p>
+            </div>
+            <div class="card-footer">
+              <small class="text-muted">
+                Fecha de creación: {{ proyecto.fecha }}<br>
+                Última modificación: {{ proyecto.fecha_modificacion }}<br>
+              </small>
+              <a href="{{ url_for('chat_id', id_proyecto=proyecto.id) }}" class="btn btn-primary btn-sm mt-2">Abrir chat</a>
+              <a href="{{ url_for('proyecto_editar', id=proyecto.id) }}" class="btn btn-outline-secondary btn-sm mt-2">Editar</a>
+              <form method="POST" action="{{ url_for('proyecto_borrar', id=proyecto.id) }}" style="display: inline;">
+                <button class="btn btn-outline-danger btn-sm mt-2" type="submit" onclick="return confirm('¿Eliminar este proyecto?')">Eliminar</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      {% else %}
+        <p class="mt-3">Aún no tienes proyectos creados.</p>
+      {% endfor %}
+    </div>
+    
+</div>
+{% endblock %}

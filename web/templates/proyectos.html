@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+{% block title %}Proyectos{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <h1>Proyectos</h1>
+    <div class="my-3">
+      <a href="{{ url_for('proyecto_nuevo') }}" class="btn btn-success">+ Nuevo Proyecto</a>
+      <a href="{{ url_for('index') }}" class="btn btn-success btn"> Volver a inicio</a>
+    </div>
+    <div id="proyectos" class="row row-cols-1 row-cols-md-2 g-3">
+      {% for proyecto in proyectos %}
+        <div class="col">
+          <div class="card h-100">
+            <div class="card-body">
+              <h5 class="card-title">{{ proyecto.name }}</h5>
+              <p class="card-text">{{ proyecto.description[:100] }}{% if proyecto.description|length > 100 %}...{% endif %}</p>
+              <p class="text-muted small">Criticidad: máx {{ proyecto.max_criticas }} críticas, CVSS &gt; {{ proyecto.score_critico }}</p>
+              {% if current_user.email == "admin@admin.com" %}
+                {% set uid = proyecto.usuario_id %}
+                {% if usuarios[uid] is defined %}
+                  {% set usuario = usuarios[uid] %}
+                  <p class="text-muted">Propietario: {{ usuario.nombre }} {{ usuario.apellidos }}</p>
+                {% else %}
+                  <p class="text-muted text-danger">Propietario: (usuario no encontrado)</p>
+                {% endif %}
+              {% endif %}
+
+            </div>
+            <div class="card-footer">
+              <small class="text-muted">
+                Fecha de creación: {{ proyecto.fecha }}<br>
+                Última modificación: {{ proyecto.fecha_modificacion }}<br>
+              </small>
+              <a href="{{ url_for('proyecto', id=proyecto.id) }}" class="btn btn-primary btn-sm mt-2">Ver</a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}
